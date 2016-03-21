@@ -18,9 +18,11 @@ export default class TextField extends Component {
 		}
 		return(
 			<div className="form-group">
+				<label htmlFor={this.props.c_field_name}>Редактирование поля {this.props.c_field_name}: </label>
 				<input onChange={this.changeValue.bind(this)} 
 					type="text" 
 					ref="textInput" 
+					id={this.props.c_field_name}
 					defaultValue={this.props.obj[this.props.c_field_name]}/>
 			</div>
 		)

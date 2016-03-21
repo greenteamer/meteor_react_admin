@@ -1,19 +1,24 @@
 import React, {Component} from 'react';
-// import Editor from 'react-editor';
 
-export default class TextareaField extends Component {
+
+export default class ToolbarVersions extends Component {
+
+	componentDidMount(){
+		this._editor = CKEDITOR.replace(this.props.c_field_name);
+	}
+
+	componentWillUnmount() {
+		this._editor.destroy();
+		this._editor = null;
+	}
 
 	changeValue(e){
 		e.preventDefault();
 		var collection_name = this.props.c_name;
 		var field_name = this.props.c_field_name;
 		var id = this.props.obj._id;
-		var value = this.refs.textInput.value;
+		var value = this._editor.getData();
 		Meteor.call("updateTextInObj", collection_name, field_name, id, value);
-	}
-
-	componentDidMount(){
-		CKEDITOR.replace( 'text' );
 	}
 
 	render(){
@@ -21,13 +26,20 @@ export default class TextareaField extends Component {
 			return <div>Нет данных</div>
 		}
 		return(
-			<div className="form-group">
-				<textarea 	onChange={this.changeValue.bind(this)} 
-							ref="textInput"
-							id="text"
+			<div className="form-group ckeditor-field">
+
+				<label htmlFor={this.props.c_field_name}>Редактирование поля {this.props.c_field_name}: </label>
+				<textarea 	ref="textInput"
+							id={this.props.c_field_name}
 							defaultValue={this.props.obj[this.props.c_field_name]} />
+
+				<i 	onClick={this.changeValue.bind(this)}
+					className="btn btn-danger fa fa-check"> <span>сохранить поле {this.props.c_field_name}</span></i>
 
 			</div>
 		)
 	}
 }
+
+
+
