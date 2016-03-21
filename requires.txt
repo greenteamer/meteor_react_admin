@@ -1,0 +1,8 @@
+aldeed:autoform
+aldeed:collection2
+shinn:autoform-file
+cfs:standard-packages
+cfs:filesystem
+cfs:gridfs
+yasaricli:slugify
+alanning:roles
