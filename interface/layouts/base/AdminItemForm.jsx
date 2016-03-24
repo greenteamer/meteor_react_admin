@@ -26,15 +26,19 @@ export default class AdminItemForm extends TrackerReact(Component) {
 
 	getComponentsBySchema(){
 		var collection = Mongo.Collection.get(this.props.c_name);
-		console.log(collection._c2._simpleSchema);
-		var fields = collection._c2._simpleSchema._schemaKeys.map( (key)=>{
+		// console.log(collection._c2._simpleSchema);
+		return fields = collection._c2._simpleSchema._schemaKeys.map( (key)=>{
 			// получаем объект схемы а затем и автоформу
 			var schema_obj = collection._c2._simpleSchema._schema[key];
 			var type;
 			if (schema_obj.autoform && schema_obj.autoform.type || schema_obj.autoform.afFieldInput.type) {
-				type = schema_obj.autoform.afFieldInput ? schema_obj.autoform.afFieldInput.type : schema_obj.autoform.type;
+				if (schema_obj.autoform.afFieldInput) {
+					type = schema_obj.autoform.afFieldInput.type;	
+				}else{
+					type = schema_obj.autoform.type;	
+				}
 			}
-			console.log(type, " ", key);
+			// console.log(type, " ", key);
 			// console.log("_schema[key]: ", schema_obj);
 			switch(type){
 				case "text":
@@ -78,12 +82,10 @@ export default class AdminItemForm extends TrackerReact(Component) {
 					console.log("switch-case default");
 			}
 		});
-		return fields;
 	}
 
 	item(){
 		var collection = Mongo.Collection.get(this.props.c_name);
-		// console.log(collection);
 		return collection.findOne(this.props._id);
 	}
 
@@ -103,28 +105,10 @@ export default class AdminItemForm extends TrackerReact(Component) {
 				<div className="container">
 					<div className="row">
 						<div className="col-lg-9">
-							<h2>Редактирование страницы {this.item().name}</h2>
+							<h2>Редактирование {AdminConfig.collections[this.props.c_name].name} {this.item().name}</h2>
 							<div className="">
 								<form className="form-horizontal" encType="multipart/form-data">
-									
-									<TextField 	c_name={this.props.c_name}
-												c_field_name="name"
-												obj={this.item()} />
 
-									<SlugField 	c_name={this.props.c_name}
-												c_field_name="slug"
-												c_field_for_slug="name"
-												obj={this.item()} />
-
-									<TextareaField 	c_name={this.props.c_name}
-												c_field_name="text"
-												obj={this.item()} />
-									
-									<FileField 	c_name={this.props.c_name}
-												c_field_name="images"
-												obj={this.item()} />
-
-									<h4>Test:</h4>
 									{this.getComponentsBySchema()}
 									
 								</form>

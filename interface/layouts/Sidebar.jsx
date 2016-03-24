@@ -9,15 +9,15 @@ export default class Sidebar extends Component {
 				<div>Пожалуйста заполните объект AdminConfig для корректного отображения меню</div>
 			)
 		}
-		var list = AdminConfig.collections.map( (collection)=>{
+		var list = _.pairs(AdminConfig.collections).map( (arr_obj)=>{
 			return (
-				<li key={collection.c_name}>
-					<a href={"/admin/"+collection.c_name}>
-						<i className="fa fa-pencil-square-o"></i> <span>{collection.name}</span>
+				<li key={arr_obj[0]}>
+					<a href={"/admin/"+arr_obj[1].c_name}>
+						<i className="fa fa-pencil-square-o"></i> <span>{arr_obj[1].name}</span>
 					</a>
 				</li>
 			)
-		});
+		})
 		return(
 			<aside className="main-sidebar">
 				<section className="sidebar">

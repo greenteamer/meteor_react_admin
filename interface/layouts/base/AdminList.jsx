@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class AdminList extends TrackerReact(Component) {
 
-	constructor(props){
+	constructor(){
 		super();
 		this.state = {
 			subscription: {
