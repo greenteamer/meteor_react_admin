@@ -3,21 +3,12 @@ import React, {Component} from 'react';
 
 export default class ToolbarVersions extends Component {
 
-	componentDidMount(){
-		this._editor = CKEDITOR.replace(this.props.c_field_name);
-	}
-
-	componentWillUnmount() {
-		this._editor.destroy();
-		this._editor = null;
-	}
-
 	changeValue(e){
 		e.preventDefault();
 		var collection_name = this.props.c_name;
 		var field_name = this.props.c_field_name;
 		var id = this.props.obj._id;
-		var value = this._editor.getData();
+		var value = this.refs.textInput.value;
 		Meteor.call("updateTextInObj", collection_name, field_name, id, value);
 	}
 

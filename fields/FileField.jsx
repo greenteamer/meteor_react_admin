@@ -47,21 +47,20 @@ export default class FileField extends Component {
 		if (!this.props.obj) {
 			return <div>Нет данных</div>
 		}
+		if (!this.props.obj.images) {
+			this.props.obj.images = [];
+		}
+		if (this.props.obj.images) {
+			this.props.obj.images.forEach( (img)=>{
+				if (!img.image_id) {
+					return <div>фото не загружено</div>
+				}
+			});
+		}
 		return(
 			<div className="form-group">
 				<div className="image-group">
-					{this.props.obj[this.props.c_field_name].map( (img)=> {
-						var arr = img.url.split("/");
-						var id = arr[arr.length -1];
-						return (
-							<div key={id} className="image-in-form">
-								<img src={img.url} width="100" />
-								<i 	onClick={this.delFile.bind(this)}
-									id={id}
-									className="btn btn-danger fa fa-times"></i>
-							</div>
-						);
-					})}
+					
 					<div className="input-file">	
 						<input onChange={this.fileUpload.bind(this)} 
 							type="file" 
