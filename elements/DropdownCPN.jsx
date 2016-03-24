@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 
 
-export default class SlugField extends Component {
+export default class DropdownCPN extends Component {
 
 	render(){
 		if (this.props.list < 1) {
 			return <div>Нет данных</div>
 		}
-		console.log("check this.props.list: ", this.props.list);
 		return(
 
 			<li className="dropdown"

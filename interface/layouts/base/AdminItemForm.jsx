@@ -13,16 +13,20 @@ export default class AdminItemForm extends TrackerReact(Component) {
 		// console.log("constructor c_name: ", props.c_name);/
 		this.state = {
 			subscription: {
-				c_name: Meteor.subscribe(props.c_name),
-				images: Meteor.subscribe("images")
+				pages: Meteor.subscribe("pages"),
+				categories: Meteor.subscribe("categories"),
+				flatblocks: Meteor.subscribe("flatblocks"),
+				projects: Meteor.subscribe("projects")
 			}
 		}
 	}
 
 	componentWillUnmount() {
 		this._renderComputation.stop();
-		this.state.subscription.c_name.stop();  
-		this.state.subscription.images.stop(); 
+		this.state.subscription.pages.stop();
+		this.state.subscription.categories.stop();
+		this.state.subscription.flatblocks.stop();
+		this.state.subscription.projects.stop();
 	}
 
 	getAutoformObj(key){

@@ -1,9 +1,21 @@
 import React, {Component} from 'react';
-import Dropdown from '../elements/Dropdown.jsx';
+import DropdownCPN from '../elements/DropdownCPN.jsx';
 
 
 export default class RelatedField extends Component {
 
+	getLabel(){
+		var collection = Mongo.Collection.get(this.props.c_name);
+		console.log("test getLabel");
+		try{
+			console.log("label: ", collection._c2._simpleSchema._schema[this.props.c_field_name]);
+			return collection._c2._simpleSchema._schema[this.props.c_field_name].label;
+		} catch(err) {
+			console.log(err);
+			return ""
+		}
+
+	}
 
 	setRelation(e){
 		// console.log("setRelation this: ", this);
@@ -27,9 +39,10 @@ export default class RelatedField extends Component {
 		return(
 			<div className="form-group">
 				<label htmlFor={this.props.c_field_name}>Родственная связь поле {this.props.c_field_name}: </label>
-				<Dropdown 	dd_description={this.props.autoform_obj.description}
-							list={this.props.related_list} 
-							itemFunc={this.setRelation.bind(this)}/>
+				
+				<DropdownCPN	dd_description={this.getLabel()}
+								list={this.props.related_list} 
+								itemFunc={this.setRelation.bind(this)}/>
 			</div>
 		)
 	}
