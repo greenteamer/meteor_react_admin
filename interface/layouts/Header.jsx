@@ -3,6 +3,12 @@ import ProfileMenu from '../profile/ProfileMenu.jsx';
 
 
 export default class Header extends Component {
+
+	toggleSidebar(e){
+		e.preventDefault();
+		$('body').toggleClass("sidebar-collapse sidebar-open");
+	}
+
 	render(){
 		return(
 			<header className="main-header">
@@ -13,7 +19,10 @@ export default class Header extends Component {
 				</a>
 				
 				<nav className="navbar navbar-static-top" role="navigation">
-					<a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
+					<a 	onClick={this.toggleSidebar.bind(this)}
+						className="sidebar-toggle" 
+						data-toggle="offcanvas" 
+						role="button">
 						<span className="sr-only">Toggle navigation</span>
 					</a>
 					<div className="navbar-custom-menu">

@@ -54,10 +54,10 @@ export default class AdminList extends TrackerReact(Component) {
 				transitionLeaveTimeout={400}
 				transitionAppear={true}>
 				
-				<h2>Список блоков</h2>
+				<h2>Список {AdminConfig.collections[this.props.c_name].name}</h2>
 				
 				<button onClick={this.addEmptyObj.bind(this)}
-						className="btn btn-primary btn-sm">добавить блок</button>
+						className="btn btn-primary btn-sm">добавить {AdminConfig.collections[this.props.c_name].name}</button>
 				
 				<table className="table">
 					<thead>

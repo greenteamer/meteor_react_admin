@@ -5,11 +5,12 @@ import TextField from '../../../fields/TextField.jsx';
 import SlugField from '../../../fields/SlugField.jsx';
 import TextareaField from '../../../fields/TextareaField.jsx';
 import FileField from '../../../fields/FileField.jsx';
+import RelatedField from '../../../fields/RelatedField.jsx';
 
 export default class AdminItemForm extends TrackerReact(Component) {
 	constructor(props){
 		super(props);
-		console.log("constructor c_name: ", props.c_name);
+		// console.log("constructor c_name: ", props.c_name);/
 		this.state = {
 			subscription: {
 				c_name: Meteor.subscribe(props.c_name),
@@ -24,9 +25,23 @@ export default class AdminItemForm extends TrackerReact(Component) {
 		this.state.subscription.images.stop(); 
 	}
 
+	getAutoformObj(key){
+		var collection = Mongo.Collection.get(this.props.c_name);
+		return collection._c2._simpleSchema._schema[key].autoform;
+	}
+
+	getRelatedCollectionList(key){
+		// получаем list objects коллеции по которой будем узнавать c_related (collection) поле
+		var collection = Mongo.Collection.get(this.props.c_name);
+		var schema_obj = collection._c2._simpleSchema._schema[key];
+		// console.log(key, schema_obj.autoform.afFieldInput.collection);
+		var c_related_name = schema_obj.autoform.afFieldInput.collection;
+		var related_collection = Mongo.Collection.get(c_related_name);
+		return list = related_collection.find().fetch();
+	}
+
 	getComponentsBySchema(){
 		var collection = Mongo.Collection.get(this.props.c_name);
-		// console.log(collection._c2._simpleSchema);
 		return fields = collection._c2._simpleSchema._schemaKeys.map( (key)=>{
 			// получаем объект схемы а затем и автоформу
 			var schema_obj = collection._c2._simpleSchema._schema[key];
@@ -38,27 +53,27 @@ export default class AdminItemForm extends TrackerReact(Component) {
 					type = schema_obj.autoform.type;	
 				}
 			}
-			// console.log(type, " ", key);
-			// console.log("_schema[key]: ", schema_obj);
 			switch(type){
+
 				case "text":
-					if (key == "slug") {
-						return (
-							<SlugField 	key={key} 
-										c_name={this.props.c_name}
-										c_field_name={key}
-										c_field_for_slug="name"
-										obj={this.item()} />
-						)
-					}else{
-						return (
-							<TextField 	key={key}
-										c_name={this.props.c_name}
-										c_field_name={key}
-										obj={this.item()} />
-						);
-					}
+					return (
+						<TextField 	key={key}
+									c_name={this.props.c_name}
+									c_field_name={key}
+									obj={this.item()} />
+					);
 					break;
+
+				case "slug":
+					return (
+						<SlugField 	key={key} 
+									c_name={this.props.c_name}
+									c_field_name={key}
+									c_field_for_slug="name"
+									obj={this.item()} />
+					)	
+					break;
+
 				case "textarea":
 					return (
 						<TextareaField 	key={key}
@@ -67,6 +82,7 @@ export default class AdminItemForm extends TrackerReact(Component) {
 										obj={this.item()} />
 					);
 					break;
+
 				case "imageGallery":
 					return (
 						<FileField 	key={key}
@@ -75,6 +91,19 @@ export default class AdminItemForm extends TrackerReact(Component) {
 									obj={this.item()} />
 					)
 					break;
+
+				case "related":
+
+					return (
+						<RelatedField 	key={key}
+										c_name={this.props.c_name}
+										c_field_name={key}
+										related_list={this.getRelatedCollectionList(key)}
+										autoform_obj={this.getAutoformObj(key)}
+										obj={this.item()} />
+					);
+					break;
+
 				case "image":
 					return null;
 					break;
