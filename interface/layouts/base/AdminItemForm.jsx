@@ -6,6 +6,7 @@ import SlugField from '../../../fields/SlugField.jsx';
 import TextareaField from '../../../fields/TextareaField.jsx';
 import FileField from '../../../fields/FileField.jsx';
 import RelatedField from '../../../fields/RelatedField.jsx';
+import BooleanField from '../../../fields/BooleanField.jsx';
 
 export default class AdminItemForm extends TrackerReact(Component) {
 	constructor(props){
@@ -16,7 +17,8 @@ export default class AdminItemForm extends TrackerReact(Component) {
 				pages: Meteor.subscribe("pages"),
 				categories: Meteor.subscribe("categories"),
 				flatblocks: Meteor.subscribe("flatblocks"),
-				projects: Meteor.subscribe("projects")
+				projects: Meteor.subscribe("projects"),
+				images: Meteor.subscribe("images")
 			}
 		}
 	}
@@ -27,7 +29,19 @@ export default class AdminItemForm extends TrackerReact(Component) {
 		this.state.subscription.categories.stop();
 		this.state.subscription.flatblocks.stop();
 		this.state.subscription.projects.stop();
+		this.state.subscription.images.stop();
 	}
+
+	getLabel(key){
+		var collection = Mongo.Collection.get(this.props.c_name);
+		try{
+			return collection._c2._simpleSchema._schema[key].label;
+		} catch(err) {
+			console.log(err);
+			return ""
+		}
+	}
+
 
 	getAutoformObj(key){
 		var collection = Mongo.Collection.get(this.props.c_name);
@@ -97,13 +111,26 @@ export default class AdminItemForm extends TrackerReact(Component) {
 					break;
 
 				case "related":
-
 					return (
 						<RelatedField 	key={key}
 										c_name={this.props.c_name}
 										c_field_name={key}
 										related_list={this.getRelatedCollectionList(key)}
 										autoform_obj={this.getAutoformObj(key)}
+										label={this.getLabel(key)}
+										obj={this.item()} />
+					);
+					break;
+
+				case "boolean":
+
+					return (
+						<BooleanField 	key={key}
+										c_name={this.props.c_name}
+										c_field_name={key}
+										default={false}
+										autoform_obj={this.getAutoformObj(key)}
+										label={this.getLabel(key)}
 										obj={this.item()} />
 					);
 					break;

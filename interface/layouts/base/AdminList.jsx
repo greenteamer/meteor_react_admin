@@ -12,7 +12,8 @@ export default class AdminList extends TrackerReact(Component) {
 				pages: Meteor.subscribe("pages"),
 				categories: Meteor.subscribe("categories"),
 				flatblocks: Meteor.subscribe("flatblocks"),
-				projects: Meteor.subscribe("projects")
+				projects: Meteor.subscribe("projects"),
+				images: Meteor.subscribe("images")
 			}
 		}
 	}
@@ -24,6 +25,7 @@ export default class AdminList extends TrackerReact(Component) {
 		this.state.subscription.categories.stop();
 		this.state.subscription.flatblocks.stop();
 		this.state.subscription.projects.stop();
+		this.state.subscription.images.stop();
 	}
 
 	addEmptyObj(e){

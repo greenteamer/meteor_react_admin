@@ -15,7 +15,7 @@ export default class DropdownCPN extends Component {
 					data-toggle="dropdown" 
 					href="#" 
 					aria-expanded="false">
-					{this.props.dd_description} <span className="caret"></span>
+					{this.props.label} <span className="caret"></span>
 				</a>
 				<ul className="dropdown-menu">
 					{this.props.list.map((item)=>{

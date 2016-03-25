@@ -4,19 +4,6 @@ import DropdownCPN from '../elements/DropdownCPN.jsx';
 
 export default class RelatedField extends Component {
 
-	getLabel(){
-		var collection = Mongo.Collection.get(this.props.c_name);
-		console.log("test getLabel");
-		try{
-			console.log("label: ", collection._c2._simpleSchema._schema[this.props.c_field_name]);
-			return collection._c2._simpleSchema._schema[this.props.c_field_name].label;
-		} catch(err) {
-			console.log(err);
-			return ""
-		}
-
-	}
-
 	setRelation(e){
 		// console.log("setRelation this: ", this);
 		// console.log("selected_item e.target.id: ", e.target);
@@ -24,7 +11,7 @@ export default class RelatedField extends Component {
 		var field_name = this.props.c_field_name;
 		var id = this.props.obj._id;
 		var selected_obj_id = e.target.id;
-		Meteor.call("updateRelationInObj", collection_name, field_name, id, selected_obj_id);
+		Meteor.call("updateFieldInObj", collection_name, field_name, id, selected_obj_id);
 	}
 
 	render(){
@@ -40,7 +27,7 @@ export default class RelatedField extends Component {
 			<div className="form-group">
 				<label htmlFor={this.props.c_field_name}>Родственная связь поле {this.props.c_field_name}: </label>
 				
-				<DropdownCPN	dd_description={this.getLabel()}
+				<DropdownCPN	label={this.props.label}
 								list={this.props.related_list} 
 								itemFunc={this.setRelation.bind(this)}/>
 			</div>

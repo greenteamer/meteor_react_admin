@@ -9,7 +9,7 @@ export default class TextField extends Component {
 		var field_name = this.props.c_field_name;
 		var id = this.props.obj._id;
 		var value = this.refs.textInput.value;
-		Meteor.call("updateTextInObj", collection_name, field_name, id, value);
+		Meteor.call("updateFieldInObj", collection_name, field_name, id, value);
 	}
 
 	render(){

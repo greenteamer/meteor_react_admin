@@ -7,7 +7,7 @@ export default class SlugField extends Component {
 		var collection_name = this.props.c_name;
 		var field_name = this.props.c_field_name;
 		var id = this.props.obj._id;
-		Meteor.call("updateTextInObj", collection_name, field_name, id, value);
+		Meteor.call("updateFieldInObj", collection_name, field_name, id, value);
 	}
 
 	changeValue(e){
