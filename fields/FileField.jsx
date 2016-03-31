@@ -47,11 +47,11 @@ export default class FileField extends Component {
 		if (!this.props.obj) {
 			return <div>Нет данных</div>
 		}
-		if (!this.props.obj.[this.props.c_field_name]) {
-			this.props.obj.[this.props.c_field_name] = [];
+		if (!this.props.obj[this.props.c_field_name]) {
+			this.props.obj[this.props.c_field_name] = [];
 		}
-		if (this.props.obj.[this.props.c_field_name]) {
-			this.props.obj.[this.props.c_field_name].forEach( (img)=>{
+		if (this.props.obj[this.props.c_field_name]) {
+			this.props.obj[this.props.c_field_name].forEach( (img)=>{
 				if (!img.image_id) {
 					return <div>фото не загружено</div>
 				}
