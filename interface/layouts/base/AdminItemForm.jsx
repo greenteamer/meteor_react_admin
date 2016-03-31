@@ -4,6 +4,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import TextField from '../../../fields/TextField.jsx';
 import SlugField from '../../../fields/SlugField.jsx';
 import TextareaField from '../../../fields/TextareaField.jsx';
+import TextareaFlatField from '../../../fields/TextareaFlatField.jsx';
 import FileField from '../../../fields/FileField.jsx';
 import RelatedField from '../../../fields/RelatedField.jsx';
 import BooleanField from '../../../fields/BooleanField.jsx';
@@ -15,10 +16,16 @@ export default class AdminItemForm extends TrackerReact(Component) {
 		this.state = {
 			subscription: {
 				pages: Meteor.subscribe("pages"),
+				posts: Meteor.subscribe("posts"),
 				categories: Meteor.subscribe("categories"),
 				flatblocks: Meteor.subscribe("flatblocks"),
+				triggers: Meteor.subscribe("triggers"),
 				projects: Meteor.subscribe("projects"),
-				images: Meteor.subscribe("images")
+				images: Meteor.subscribe("images"),
+				services: Meteor.subscribe("services"),
+				reviews: Meteor.subscribe("reviews"),
+				partners: Meteor.subscribe("partners"),
+				sites: Meteor.subscribe("sites")
 			}
 		}
 	}
@@ -26,10 +33,16 @@ export default class AdminItemForm extends TrackerReact(Component) {
 	componentWillUnmount() {
 		this._renderComputation.stop();
 		this.state.subscription.pages.stop();
+		this.state.subscription.posts.stop();
 		this.state.subscription.categories.stop();
 		this.state.subscription.flatblocks.stop();
+		this.state.subscription.triggers.stop();
 		this.state.subscription.projects.stop();
 		this.state.subscription.images.stop();
+		this.state.subscription.services.stop();
+		this.state.subscription.reviews.stop();
+		this.state.subscription.partners.stop();
+		this.state.subscription.sites.stop();
 	}
 
 	getLabel(key){
@@ -76,9 +89,9 @@ export default class AdminItemForm extends TrackerReact(Component) {
 				case "text":
 					return (
 						<TextField 	key={key}
-									c_name={this.props.c_name}
-									c_field_name={key}
-									obj={this.item()} />
+								c_name={this.props.c_name}
+								c_field_name={key}
+								obj={this.item()} />
 					);
 					break;
 
@@ -95,6 +108,15 @@ export default class AdminItemForm extends TrackerReact(Component) {
 				case "textarea":
 					return (
 						<TextareaField 	key={key}
+										c_name={this.props.c_name}
+										c_field_name={key}
+										obj={this.item()} />
+					);
+					break;
+
+				case "textareaFlat":
+					return (
+						<TextareaFlatField 	key={key}
 										c_name={this.props.c_name}
 										c_field_name={key}
 										obj={this.item()} />

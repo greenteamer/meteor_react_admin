@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-export default class ToolbarVersions extends Component {
+export default class TextareaFlatField extends Component {
 
 	changeValue(e){
 		e.preventDefault();

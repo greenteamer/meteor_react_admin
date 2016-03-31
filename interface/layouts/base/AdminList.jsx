@@ -10,10 +10,16 @@ export default class AdminList extends TrackerReact(Component) {
 		this.state = {
 			subscription: {
 				pages: Meteor.subscribe("pages"),
+				posts: Meteor.subscribe("posts"),
 				categories: Meteor.subscribe("categories"),
 				flatblocks: Meteor.subscribe("flatblocks"),
+				triggers: Meteor.subscribe("triggers"),
 				projects: Meteor.subscribe("projects"),
-				images: Meteor.subscribe("images")
+				images: Meteor.subscribe("images"),
+				services: Meteor.subscribe("services"),
+				reviews: Meteor.subscribe("reviews"),
+				partners: Meteor.subscribe("partners"),
+				sites: Meteor.subscribe("sites")
 			}
 		}
 	}
@@ -22,10 +28,16 @@ export default class AdminList extends TrackerReact(Component) {
 	componentWillUnmount() {
 		this._renderComputation.stop();
 		this.state.subscription.pages.stop();
+		this.state.subscription.posts.stop();
 		this.state.subscription.categories.stop();
 		this.state.subscription.flatblocks.stop();
+		this.state.subscription.triggers.stop();
 		this.state.subscription.projects.stop();
 		this.state.subscription.images.stop();
+		this.state.subscription.services.stop();
+		this.state.subscription.reviews.stop();
+		this.state.subscription.partners.stop();
+		this.state.subscription.sites.stop();
 	}
 
 	addEmptyObj(e){
