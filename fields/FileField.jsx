@@ -7,6 +7,7 @@ export default class FileField extends Component {
 		// няш загрузка файликов )) 
 		e.preventDefault();
 		var collection_name = this.props.c_name;
+		var c_field_name = this.props.c_field_name;
 		var obj_id = this.props.obj._id;
 		console.log(e.target.files.length);
 		FS.Utility.eachFile(e, function(file) {
@@ -23,7 +24,11 @@ export default class FileField extends Component {
 								// пушим в массив фоток нужного объекта
 								liveQuery.stop();
 								var image_url = "/cfs/files/images/" + newImage._id;
-								Meteor.call("pushImageToObj", collection_name, obj_id, image_url);
+								console.log("collection_name: ", collection_name, 
+											"c_field_name: ", c_field_name, 
+											"obj_id: ", obj_id, 
+											"image_url: ", image_url)
+								Meteor.call("pushImageToObj", collection_name, c_field_name, obj_id, image_url);
 							}
 						}
 					});
